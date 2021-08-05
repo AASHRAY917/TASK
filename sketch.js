@@ -1,54 +1,44 @@
-var trex, trex_running, trex_collided;
-var ground, invisibleGround, groundImage;
+var sea,ship,bird;
+var seaImg,shipImg;
+var birdImg;
 
-function preload() 
+
+function preload()
 {
-trex_running = loadAnimation("trex1.png", "trex3.png", "trex4.png");
-trex_collided = loadImage("trex_collided.png");
-groundImage = loadImage("ground2.png");
+    seaImg = loadImage("sea.png");
+    shipImg = loadAnimation("ship-1.png","ship-2.png","ship-3.png","ship-4.png");
+    birdImg = loadImage("birdImg")
+
 }
 
-function setup() 
-{
-createCanvas(600, 200);
+function setup()
+{ 
+  createCanvas(400,400);
+  background("blue");
 
-//create a trex sprite
-trex = createSprite(50,160,20,50);
-trex.addAnimation("running", trex_running);
-trex.scale = 0.5;
+  sea = createSprite(400,200);
+  sea.addImage(seaImg);
+  sea.velocityX = -5;
+  sea.scale = 0.3;
 
-//create a ground sprite
-ground = createSprite(200,180,400,20);
-ground.addImage("ground",groundImage);
-ground.x = ground.width/2;
-ground.velocityX = -4;
+  ship = createSprite(130,200,30,30);
+  ship.addAnimation("movingShip",shipImg);
+  ship.scale = 0.25;
 
-invisibleGround = createSprite(200,190,400,10);
-invisibleGround.visible = false;
+  
 
 }
 
 function draw() 
 {
-background(220);
-console.log(trex.y);
 
-//jump when the space button is pressed
+  background(0);
+  sea.velocityX = -3;
 
-if(keyDown("space") && trex.y >= 160) 
+  if(sea.x<0)
   {
-    trex.velocityY = -10;
+     sea.x = sea.width/8;
+
   }
-
-trex.velocityY = trex.velocityY + 0.8
-
-if (ground.x < 0) 
-{
-ground.x = ground.width / 2;
-}
-
-//trex.collide(ground);
-trex.collide(invisibleGround);
-
-drawSprites();
+  drawSprites();
 }
